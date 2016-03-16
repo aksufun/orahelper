@@ -1,0 +1,11 @@
+set scan on
+CREATE USER helper IDENTIFIED BY &&password_helper
+/
+set scan off
+GRANT CONNECT, RESOURCE, ALTER ANY PROCEDURE, CREATE VIEW, SELECT ANY DICTIONARY, EXECUTE ANY TYPE, SELECT ANY TABLE, DEBUG CONNECT SESSION TO helper
+/
+------
+GRANT SELECT ON v_$sesstat TO helper
+/
+GRANT SELECT ON v_$statname TO helper
+/

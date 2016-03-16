@@ -1,0 +1,2 @@
+DROP USER helper CASCADE
+/
