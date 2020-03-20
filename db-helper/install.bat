@@ -1,1 +1,1 @@
-sqlplus /nolog @src/main.sql %1
+sqlplus /nolog @src/main.sql %1 %2

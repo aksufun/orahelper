@@ -1,0 +1,46 @@
+DECLARE
+  v_res generics.tableinstance_t;
+  v_tables stringarray_t := stringarray_t(
+--'TIERTRANSITIONS',
+'BOXBILLING'/*,
+'BONUSGROUPS',
+'BONUSGROUPSGROUPING',
+'BOXBILLING',
+'BRANDTAXES',
+'DLPLANMAPPING',
+'DLPLANMIGRATION',
+'LIMITVALUES',
+'SERVICERATES',
+'SERVICES',
+'TIERLINEPRICES',
+'WEBCALLLIMITS',
+'TIERTRANSITIONS',
+'CALLMETERING',
+'CONFIRMATIONEMAILMAPPING',
+'EXTENSIONTYPENAMES2',
+'MARKETINGLINKS',
+'PAPERCHECKS',
+'PHSBRANDS',
+'ROLLBACKDATA',
+'UPGRADENOTIFICATIONCONFIG'*/);
+  v_rules types.assocstringarray_t;
+BEGIN
+  FOR x IN v_tables.first..v_tables.last LOOP
+    v_rules.delete;
+    BEGIN
+    CASE v_tables(x)
+      WHEN 'BOXBILLING' THEN
+        v_rules('SERVICELEVEL') := 'WHEN <[val]> = 4467 AND <[BOXPRICEID]> > 81000 THEN 9999';
+    END CASE;
+    v_res := generics.GetTableInstance('ZPORTAL', v_tables(x), p_where => 'SERVICELEVEL = 4467');
+    generics.modifyData(v_res, v_rules);
+    generics.PrintIns(v_res);
+    dbms_output.put_line(rpad('=',80,'='));
+    EXCEPTION
+      WHEN OTHERS THEN
+        dbms_output.put_line(v_tables(x));
+        RAISE;
+    END;
+  END LOOP;
+END;
+/

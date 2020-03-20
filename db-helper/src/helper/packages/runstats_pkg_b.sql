@@ -93,6 +93,7 @@ begin
     ) loop
         dbms_output.put_line( x.data );
     end loop;
+    ROLLBACK;
 end;
 
 end;

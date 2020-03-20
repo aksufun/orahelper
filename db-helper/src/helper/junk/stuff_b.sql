@@ -10,7 +10,7 @@ IS
   vCursorID NUMBER;
   vDummy NUMBER;
 BEGIN
-  vStatement(1) := replace(PKGCREATESTART, '<PKGNAME>', 'EXCEPTNS');
+  vStatement(1) := replace(PKGCREATESTART, '<PKGNAME>', 'E');
   vStatement(2) := '-- Generated at : ' || current_date;
   vStatement(3) := 'IS';
   vStatement(4) := '--';
@@ -26,7 +26,7 @@ BEGIN
     vStatement((excs.rn-1)*4+7) := '  PRAGMA EXCEPTION_INIT (' || excs.name||'#, ' || to_char(excs.id,'09999') || ');';
     vStatement((excs.rn-1)*4+8) := '--';
   END LOOP;
-  vStatement(vStatement.count()+1) := replace(PKGCREATEEND, '<PKGNAME>', 'EXCEPTNS');
+  vStatement(vStatement.count()+1) := replace(PKGCREATEEND, '<PKGNAME>', 'E');
   
   FOR x IN  vStatement.first..vStatement.last LOOP
     dbms_output.put_line(vStatement(x));
